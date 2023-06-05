@@ -8,7 +8,12 @@
     </Window.DataContext>
 
     <Grid>
-        <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListBox Grid.Row="0" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -19,7 +24,18 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+        <ListBox Grid.Row="1" ItemsSource="{Binding CompletedTasks}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsCompleted}" Margin="5" IsEnabled="False" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom">
             <TextBox Width="200" Text="{Binding NewTaskTitle}" Margin="5" />
             <Button Content="Add" Command="{Binding AddTaskCommand}" Margin="5" />
             <Button Content="Complete" Command="{Binding CompleteTaskCommand}" Margin="5" />
